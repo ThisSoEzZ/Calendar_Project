@@ -35,26 +35,19 @@ $routes->setAutoRoute(true);
 
 
 // custom routes
-$routes->get('/', 'User::index');
-$routes->get('/home/index', 'User::index');
+$routes->get('/', 'FullCalendar::index');
+$routes->get('/home/index', 'Fullcalendar::index');
 $routes->get('/register/signup', 'Register::index');
 $routes->get('/login/signin', 'Login::index');
 $routes->get('/home/index', 'User::index',['filter' => 'authGuard']);
-$routes->get('/logout', 'Login::logout');
+$routes->get('/logout', 'Login::logout',['filter' => 'authGuard']);
 $routes->get('/logout_message', 'Login::logout_message');
 $routes->get('/dashboard', 'Admin::index',['filter' => 'authGuard']);
 
-$routes->get('/User/repair_list', 'Repair::index');
-$routes->get('/User/repair_detail/(:num)', 'Repair::repairDetail/$1');
-$routes->get('/User/edit_profile/(:num)', 'User::editprofile/$1');
-$routes->get('/User/user_detail_repair/(:num)', 'User::Getidrepair/$1');
-$routes->get('/User/user_deatil_edit_repair/(:num)', 'User::GetEditRepair/$1');
-$routes->get('/User/User_detail_id_repair/(:num)', 'User::GetidDetailrepair/$1');
-$routes->get('/User/repair_list', 'Repair::demo2');
-$routes->get('/User/bystatus/(:num)', 'Repair::bystatus/$1');
-$routes->get('/User/edit_password/(:num)', 'User::editpassword/$1');
-$routes->get('/User/updatePassword/(:num)', 'User::updatePassword/$1');
-
+$routes->get('/User/edit_profile/(:num)', 'User::editprofile/$1',['filter' => 'authGuard']);
+$routes->get('/User/edit_password/(:num)', 'User::editpassword/$1',['filter' => 'authGuard']);
+$routes->get('/User/updatePassword/(:num)', 'User::updatePassword/$1',['filter' => 'authGuard']);
+$routes->get('/User/meeting_user_information/(:num)', 'meeting::meeting_user_information/$1',['filter' => 'authGuard']);
 
 $routes->get('/Admin/admin_all_user', 'Admin::getAlluser');
 $routes->get('/Admin/admin_all_admin', 'Admin::getAllAdmin');
@@ -68,24 +61,38 @@ $routes->get('/Admin/updatePasswordAdmin/(:num)', 'Admin::updatePasswordAdmin/$1
 $routes->get('/Admin/admin_Userprofile/(:num)', 'Admin::admin_Userprofile/$1');
 $routes->get('/Admin/editpasswordAdmin/(:num)', 'Admin::editpasswordAdmin/$1');
 $routes->get('/Admin/updatePasswordUser/(:num)', 'Admin::updatePasswordUser/$1');
-
-$routes->post('update_user_detail_case/(:num)', 'User::update_user_detail_case/$1');
-$routes->post('update_user_detail_case2/(:num)', 'User::update_user_detail_case2/$1');
-
-// $routes->get('/User/edit_profile_Image/(:num)', 'User::editprofileImage/$1');
-$routes->post('updateProfile', 'User::updateProfile');
-
-// $routes->get('/User/repair_insert_case/(:num)', 'Repair::repairGetId/$1');
-$routes->get('/User/repair_insert_case/(:num)', 'Repair::repairGetId/$1');
-
-$routes->post('repair_case_insert', 'Repair::repair_case_insert');
-$routes->get('/repair/confirm-delete/(:num)', 'Repair::confirmdelete/$1');
-$routes->get('/repair/delete/(:num)', 'Repair::delete/$1');
-
-// $routes->post('updateimgprofile', 'User::updateimgprofile');
-$routes->post('updateProfile2/(:num)', 'User::updateProfile2/$1');
+$routes->get('/Admin/admin_repairDetail/(:num)', 'Admin::admin_repairDetail/$1');
+$routes->get('/Admin/admin_Adminprofile/(:num)', 'Admin::admin_Adminprofile/$1');
+$routes->get('/Admin/editAdminpasswordAdmin/(:num)', 'Admin::editAdminpasswordAdmin/$1');
+$routes->get('/Admin/updateAdminPasswordAdmin/(:num)', 'Admin::updateAdminPasswordAdmin/$1');
+$routes->get('/Admin/updateCaseRepair/(:num)', 'Admin::updateCaseRepair/$1');
 
 
+// $routes->post('updateProfile', 'User::updateProfile');
+
+$routes->post('updateProfile/(:num)', 'User::updateProfile/$1');
+
+
+$routes->get('/FullCalendar/byroom', 'FullCalendar::byroom');
+$routes->get('/FullCalendar/bystatus/(:num)', 'FullCalendar::bystatus/$1');
+$routes->get('/FullCalendar/getRecords', 'FullCalendar::getRecords');
+$routes->get('/Meeting/DetailMeetingRoom/(:num)', 'FullCalendar::DetailMeetingRoom/$1');
+
+
+$routes->get('/Meeting/meeting_information', 'Meeting::meeting_information');
+$routes->get('/Meeting/update_detail_meeting/(:num)', 'Meeting::update_detail_meeting/$1',['filter' => 'authGuard']);
+$routes->get('/Meeting/user_meeting_detail_edit/(:num)', 'Meeting::user_meeting_detail_edit/$1');
+$routes->get('/Meeting/delete/(:num)', 'Meeting::delete_meeting_user/$1',['filter' => 'authGuard']);
+$routes->get('/insert/(:num)', 'Meeting::insert/$1',['filter' => 'authGuard']);
+$routes->get('/insert', 'Meeting::insert',['filter' => 'authGuard']);
+$routes->post('submit-form', 'Meeting::store',['filter' => 'authGuard']);
+
+
+$routes->get('/room/information_room', 'Room::index');
+$routes->get('/room/room_detail/(:num)', 'Room::GetRoomId/$1');
+
+$routes->get('/report/meeting_report', 'Report::index');
+$routes->get('/TestEvent/(:num)', 'Report::Test/$1',['filter' => 'authGuard']);
 
 /*
  * --------------------------------------------------------------------

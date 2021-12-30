@@ -21,10 +21,10 @@ class Login extends Controller
 
         $userModel = new UserModel();
 
-        $email = $this->request->getvar('user_email');
+        $email = $this->request->getvar('user_id');
         $password = $this->request->getvar('user_password');
         
-        $data = $userModel->where('user_email', $email)->first();
+        $data = $userModel->where('user_id', $email)->first();
         
         if($data){
             $pass = $data['user_password'];

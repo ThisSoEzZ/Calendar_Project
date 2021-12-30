@@ -16,6 +16,7 @@ class User extends Controller
         echo view('index');
         echo view('component/footer');
 
+
     }
     public function editprofile($Userid = null)
     {
@@ -75,7 +76,7 @@ class User extends Controller
         return redirect()->to('/index.php/home/index')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
     }
 
-    public function updateProfile2($id)
+    public function updateProfile($id)
     {
         $UserModel = new UserModel();
         $user_item = $UserModel->find($id);

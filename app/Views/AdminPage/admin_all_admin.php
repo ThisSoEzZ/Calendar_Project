@@ -47,7 +47,7 @@
               ?> </center></td>
             
              <td>
-              <center><a type="button" href="<?php echo base_url(); ?>/index.php/User/repair_detail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
+              <center><a type="button" href="<?php echo base_url(); ?>/index.php/Admin/admin_Adminprofile/<?= $admin['user_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
                data-container="body" data-animation="true">เเก้ไข/รายละเอียด</a> </center>
             </td> 
 

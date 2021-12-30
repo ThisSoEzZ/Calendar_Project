@@ -151,7 +151,7 @@ class Admin extends Controller
         echo view('component/headerAdmin');
         $UserModel = new UserModel();
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
-        return view('AdminPage/admin_chancepassword', $Userdata);
+        return view('AdminPage/admin_chancepasswordUser', $Userdata);
     }
     public function editpasswordAdmin($Userid = null)
     {
@@ -167,4 +167,78 @@ class Admin extends Controller
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/Admin_user_profile', $Userdata);
     }
+
+    public function admin_repairDetail($id = null)
+    {
+        echo view('component/headerAdmin');
+        $RepairModel = new RepairModel();
+        
+        $data['repair'] = $RepairModel->where('case_id', $id)->first();
+        return view('AdminPage/admin_detail_repair', $data);
+    }
+
+    public function admin_Adminprofile($Userid = null)
+    {
+        echo view('component/headerAdmin');
+        $UserModel = new UserModel();
+        $Userdata['admin'] = $UserModel->where('user_id', $Userid)->first();
+        return view('AdminPage/admin_admin_profile', $Userdata);
+    }
+    public function editAdminpasswordAdmin($Userid = null)
+    {
+        echo view('component/headerAdmin');
+        $UserModel = new UserModel();
+        $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
+        return view('AdminPage/admin_chanceAdminpasswordAdmin', $Userdata);
+    }
+    public function updateAdminPasswordAdmin() {
+        $UserModel = new UserModel();
+        $id = $this->request->getVar('user_id');
+        $data = [
+            'user_password' => password_hash($this->request->getVar('user_password'), PASSWORD_DEFAULT),
+        ];
+        $UserModel->update($id, $data);
+        return redirect()->to('/index.php/admin/admin_all_admin')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
+    }
+
+    public function updateCaseRepair($id)
+    {
+        $RepairModel = new RepairModel();
+        $user_item = $RepairModel->find($id);
+        $old_img_name = $user_item['case_img'];
+
+        $file = $this->request->getFile('case_img');
+        if ($file->isValid() && !$file->hasMoved()) {
+            if (file_exists("uploads/Imagecase/" . $old_img_name)) {
+                unlink("uploads/Imagecase/" . $old_img_name);
+            }
+            $imageName = $file->getRandomName();
+            $file->move('uploads/Imagecase/', $imageName);
+        } else {
+            $imageName = $old_img_name;
+        }
+        
+        $data = [
+            'user_id' => $this->request->getVar('user_id'),
+            'case_type' => $this->request->getVar('case_type'),
+            'case_detail' => $this->request->getVar('case_detail'),
+            'case_loc' => $this->request->getVar('case_loc'),
+            'case_update' => date('Y-m-d H:i:s'),
+            'user_name' => $this->request->getVar('user_name'),
+            'user_email' => $this->request->getVar('user_email'),
+            'user_phone' => $this->request->getVar('user_phone'),
+            'case_status' => $this->request->getVar('case_status'),
+            'admin_email' => $this->request->getVar('admin_email'),
+            'admin_name' => $this->request->getVar('admin_name'),
+            'case_update_log' => $this->request->getVar('case_update_log'),
+
+            'case_img' => $imageName
+        ];
+
+        $RepairModel->update($id, $data);
+        return redirect()->to('/index.php/Admin/admin_all_repair')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
+    }
+
+
+
 }

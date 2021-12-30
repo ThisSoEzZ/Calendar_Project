@@ -13,8 +13,7 @@ class AuthGuard implements FilterInterface
     {
         if (!session()->get('isLoggedIn'))
         {
-            return redirect()
-                ->to('/index.php/login/signin');
+            return redirect()->to('/index.php/login/signin')->with('failogin', 'กรุณาเข้าสู่ระบบ');
         }
     }
     

@@ -35,7 +35,7 @@ class Database extends Config
 		'hostname' => 'localhost',//localhost
 		'username' => 'root',//root
 		'password' => '',//ไม่มี
-		'database' => 'repair',//education_service
+		'database' => 'events',//education_service
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,

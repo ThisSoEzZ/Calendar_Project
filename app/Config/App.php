@@ -23,7 +23,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $baseURL = 'http://localhost/project/public/';
+	public $baseURL = 'http://localhost/Calendarproject/public/';
 	// public $baseURL = 'http://localhost:8080/';
 	// http://localhost/project/public/index.php/home/index
 

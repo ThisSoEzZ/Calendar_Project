@@ -85,7 +85,7 @@
 <td><?php echo $repair['date_save']; ?></td>
 
                 <td><center>
-              <a type="button" href="<?php echo base_url(); ?>/index.php/User/User_detail_id_repair/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
+              <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/admin_repairDetail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
                data-container="body" data-animation="true">ดูรายละเอียด/เเก้ไข</a></center>
             </td> 
             <td><center>
@@ -93,28 +93,39 @@
                data-container="body" data-animation="true">ยกเลิก</a>  </center>          </td> 
         
             
-            
-                <!-- <?php if (isset($repair['case_status']) && $repair['case_status'] == 1) { ?>
-                    <td>
-              <a type="button" href="<?php echo base_url(); ?>/User/repair_detail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
-               data-container="body" data-animation="true">เเก้ไข</a>
+               <!-- <?php if (isset($repair['case_status']) && $repair['case_status'] == 1) { ?>
+                  <td><center>
+              <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/admin_repairDetail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
+               data-container="body" data-animation="true">ดูรายละเอียด/เเก้ไข</a></center>
             </td> 
-            <td>
-              <a type="button" href="<?php echo base_url(); ?>/User/repair_detail/<?= $repair['case_id'];?>" class="btn btn-sm btn-danger btn-tooltip" data-toggle="tooltip" data-placement="top" 
-               data-container="body" data-animation="true">ยกเลิก</a>
+            <td><center>
+            <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/Admindeleterepair/<?= $repair['case_id'];?>" class="btn btn-sm btn-danger btn-tooltip" data-toggle="tooltip" data-placement="top" 
+               data-container="body" data-animation="true">ยกเลิก</a>  </center></td> 
+               
+              <?php }else if (isset($repair['case_status']) && $repair['case_status'] == 4) { ?>
+                <td><center>
+              <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/admin_repairDetail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
+               data-container="body" data-animation="true">ดูรายละเอียด/เเก้ไข</a></center>
             </td> 
-              <?php } else{ ?>
-             <td>
-             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="กรุณาเข้าสู่ระบบเพื่อดูรายละเอียดเพิ่มเติม">
-                <button class="btn btn-sm btn-info btn-tooltip" style="pointer-events: none;" type="button" disabled>ดูรายละเอียด</button>
-                </span>
             </td> 
-            <td>
-            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="กรุณาเข้าสู่ระบบเพื่อดูรายละเอียดเพิ่มเติม">
-                <button class="btn btn-sm btn-info btn-tooltip" style="pointer-events: none;" type="button" disabled>ดูรายละเอียด</button>
-                </span>
+            <td><center>
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="รายการนี้ถูกยกเลิกเเล้ว">
+                <button class="btn btn-sm btn-danger btn-tooltip" style="pointer-events: none;" type="button" disabled>ยกเลิก</button>
+                </span></center>
             </td> 
-                <?php } ?> -->
+                <?php }else{ ?>
+                  <td><center>
+              <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/admin_repairDetail/<?= $repair['case_id'];?>" class="btn btn-sm btn-info btn-tooltip" data-toggle="tooltip" data-placement="top" 
+               data-container="body" data-animation="true">ดูรายละเอียด/เเก้ไข</a></center>
+            </td> 
+            </td> 
+            <td><center>
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="รายการนี้กำลังอยู่ในกระบวนการทำงานจึงยกเลิกไม่ได้">
+                <button class="btn btn-sm btn-danger btn-tooltip" style="pointer-events: none;" type="button" disabled>ยกเลิก</button>
+                </span></center>
+            </td> 
+                <?php } ?>   -->
+
 
 
             

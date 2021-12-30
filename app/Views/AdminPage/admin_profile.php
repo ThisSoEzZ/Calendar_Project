@@ -43,7 +43,7 @@
                             <br>
                             <div class="form-group mb-3">
                                 <div class="row">
-                                    <input type="hidden" id="user_id" name="user_id" value="<?php echo $user['user_id']; ?>" class="form-control" />
+                                    <!-- <input type="hidden" id="user_id" name="user_id" value="<?php echo $user['user_id']; ?>" class="form-control" /> -->
                                     <div class="col-sm-2">
                                         คำนำหน้า
                                         <select class="form-control" name="user_title" value="<?php echo $user['user_title']; ?>">
