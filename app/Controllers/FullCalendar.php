@@ -21,8 +21,7 @@ class FullCalendar extends Controller
     echo view('component/header');
     $RoomModel = new RoomModel();
     $EventModel = new EventModel();
-    $query = $EventModel->select('*')->join('room', 'room.room_id = events.room_id')->get();
-    // ->where('meeting_status',1)
+    $query = $EventModel->select('*')->join('room', 'room.room_id = events.room_id')->where('meeting_status',1)->get();
     $data = $query->getResult();
 
     foreach ($data as $key => $value) {
@@ -57,18 +56,25 @@ class FullCalendar extends Controller
     $EventModel = new EventModel();
     $RoomModel = new RoomModel();
 
-    $data = $EventModel->Where('meeting_status', $id)->get()->getResult();
+    $data = $EventModel->join('room', 'room.room_id = events.room_id')->Where('meeting_status', $id)->get()->getResult();
 
 
 
     foreach ($data as $key => $value) {
       $data['data'][$key]['id'] = $value->meeting_id;
-      $data['data'][$key]['title'] = $value->meeting_title . '/ เรื่อง' . $value->meeting_detail;
+      $data['data'][$key]['room_name'] = $value->room_name;
+      $data['data'][$key]['startcontent'] = $value->start_date;
+      $data['data'][$key]['endcontent'] = $value->end_date;
+      $data['data'][$key]['name'] = $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname;
+      $data['data'][$key]['titlePopover'] = ' ' . $value->meeting_title;
+      $data['data'][$key]['phone'] = ' ' . $value->meeting_phone;
+
+      $data['data'][$key]['title'] = $value->meeting_title . '  /  จองโดย : ' . $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname . '  /  เบอร์โทรศัพท์ : ' . $value->meeting_phone . '  /  ห้องประชุม : ' . $value->room_name;
       $data['data'][$key]['start'] = $value->start_date;
       $data['data'][$key]['end'] = $value->end_date;
       $data['data'][$key]['backgroundColor'] = $value->backgroundColor;
       $data['data'][$key]['textColor'] = "white";
-      $data['data'][$key]['description'] = $value->meeting_title . '/ เรื่อง :' . $value->meeting_detail . '/ เริ่ม :' . $value->start_date . '/ สิ้นสุด :' . $value->end_date;
+      $data['data'][$key]['description'] = 'ห้องประชุม : ' . $value->room_name . '  / รายละเอียด : ' . $value->meeting_detail . '  /  เริ่ม : ' . $value->start_date . '  /  สิ้นสุด :' . $value->end_date;
     }
     $data['room'] = $RoomModel->orderBy('room_id')->findAll();
 
@@ -90,22 +96,30 @@ class FullCalendar extends Controller
     echo view('component/header');
     $EventModel = new EventModel();
     $RoomModel = new RoomModel();
-
-    $query = $EventModel->like('room_id', $this->request->getVar('q'))->get();
-
-
+    $query = $RoomModel->join('events', 'events.room_id = room.room_id')->Where('meeting_status',1)->like('room_name', $this->request->getVar('q'))->get();
     // $query = $EventModel->Where('meeting_id',35)->get();
 
+    
+    
     $data = $query->getResult();
 
     foreach ($data as $key => $value) {
       $data['data'][$key]['id'] = $value->meeting_id;
-      $data['data'][$key]['title'] = $value->meeting_title . '/ เรื่อง' . $value->meeting_detail;
+      $data['data'][$key]['room_name'] = $value->room_name;
+    
+
+      $data['data'][$key]['startcontent'] = $value->start_date;
+      $data['data'][$key]['endcontent'] = $value->end_date;
+      $data['data'][$key]['name'] = $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname;
+      $data['data'][$key]['titlePopover'] = ' ' . $value->meeting_title;
+      $data['data'][$key]['phone'] = ' ' . $value->meeting_phone;
+
+      $data['data'][$key]['title'] = $value->meeting_title . '  /  จองโดย : ' . $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname . '  /  เบอร์โทรศัพท์ : ' . $value->meeting_phone . '  /  ห้องประชุม : ' . $value->room_name;
       $data['data'][$key]['start'] = $value->start_date;
       $data['data'][$key]['end'] = $value->end_date;
       $data['data'][$key]['backgroundColor'] = $value->backgroundColor;
       $data['data'][$key]['textColor'] = "white";
-      $data['data'][$key]['description'] = $value->meeting_title . '/ เรื่อง :' . $value->meeting_detail . '/ เริ่ม :' . $value->start_date . '/ สิ้นสุด :' . $value->end_date;
+      $data['data'][$key]['description'] = 'ห้องประชุม : ' . $value->room_name . '  / รายละเอียด : ' . $value->meeting_detail . '  /  เริ่ม : ' . $value->start_date . '  /  สิ้นสุด :' . $value->end_date;
     }
     $data['room'] = $RoomModel->orderBy('room_id')->findAll();
 
@@ -130,12 +144,19 @@ class FullCalendar extends Controller
 
     foreach ($data as $key => $value) {
       $data['data'][$key]['id'] = $value->meeting_id;
-      $data['data'][$key]['title'] = $value->meeting_title . '/ เรื่อง' . $value->meeting_detail;
+      $data['data'][$key]['room_name'] = $value->room_name;
+      $data['data'][$key]['startcontent'] = $value->start_date;
+      $data['data'][$key]['endcontent'] = $value->end_date;
+      $data['data'][$key]['name'] = $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname;
+      $data['data'][$key]['titlePopover'] = ' ' . $value->meeting_title;
+      $data['data'][$key]['phone'] = ' ' . $value->meeting_phone;
+
+      $data['data'][$key]['title'] = $value->meeting_title . '  /  จองโดย : ' . $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname . '  /  เบอร์โทรศัพท์ : ' . $value->meeting_phone . '  /  ห้องประชุม : ' . $value->room_name;
       $data['data'][$key]['start'] = $value->start_date;
       $data['data'][$key]['end'] = $value->end_date;
       $data['data'][$key]['backgroundColor'] = $value->backgroundColor;
       $data['data'][$key]['textColor'] = "white";
-      $data['data'][$key]['description'] = $value->meeting_title . '/ เรื่อง :' . $value->meeting_detail . '/ เริ่ม :' . $value->start_date . '/ สิ้นสุด :' . $value->end_date;
+      $data['data'][$key]['description'] = 'ห้องประชุม : ' . $value->room_name . '  / รายละเอียด : ' . $value->meeting_detail . '  /  เริ่ม : ' . $value->start_date . '  /  สิ้นสุด :' . $value->end_date;
     }
 
     return view('index', $data);

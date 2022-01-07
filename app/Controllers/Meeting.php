@@ -57,7 +57,6 @@ class Meeting extends Controller
             $EventModel->insert($data);
             return redirect()->to('/index.php/FullCalendar/index')->with('profilesuccess', 'จองห้องประชุมเสร็จสิ้น');
         } else {
-            $EventModel->insert($data);
             return redirect()->to('/index.php/FullCalendar/index')->with('failinsert', 'จองห้องประชุมผิดพลาด');
         }
     }
@@ -158,10 +157,25 @@ class Meeting extends Controller
     {
         echo view('component/header');
         $EventModel = new EventModel();
+     
+
         $Meetingdata['user'] = $EventModel->orderBy('user_id', 'DESC')
+        
             ->join('room', 'room.room_id = events.room_id')
             ->findAll();
         return view('Meeting/information_meeting_list', $Meetingdata);
     }
     
+    public function bystatusMeeting($id = null)
+    {
+        echo view('component/header');
+        $EventModel = new EventModel();
+        $data['count0'] = $EventModel->orderBy('meeting_status')->get()->getNumRows();
+        $data['count1'] = $EventModel->where('meeting_status', 0)->get()->getNumRows();
+        $data['count2'] = $EventModel->where('meeting_status', 1)->get()->getNumRows();
+        $data['count3'] = $EventModel->where('meeting_status', 2)->get()->getNumRows();
+        $data['user'] = $EventModel->where('meeting_status', $id)->join('room', 'room.room_id = events.room_id')->findAll();
+        return view('Meeting/information_meeting_list', $data);
+    }
+
 }

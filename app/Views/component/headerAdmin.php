@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="<?php echo base_url(); ?>/assetsdashboard/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="<?php echo base_url(); ?>/assets/img/brand/Pealogo.png">
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>/theme-assets/logo.png">
   <title>
     จัดการข้อมูล
   </title>
@@ -19,6 +19,7 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <!-- CSS Files -->
   <link id="pagestyle" href="<?php echo base_url(); ?>/assetsdashboard/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 </head>
@@ -26,7 +27,8 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+      <a class="navbar-brand m-0" href="<?php echo base_url(); ?>/index.php/dashboard" >
+      <!-- target="_blank" -->
         <img src="<?php echo base_url(); ?>/assetsdashboard/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">        <?php $session = session(); ?>
 
         <span class="ms-1 font-weight-bold text-white">Admin : <?php echo $session->get('user_name'); ?></span><br>
@@ -47,6 +49,9 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8"><u>การจัดการข้อมูลส่วนตัว</u></h6>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="<?php echo base_url(); ?>/index.php/Admin/admin_all_user">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -63,12 +68,15 @@
             <span class="nav-link-text ms-1">รายชื่อผู้ดูเเลระบบ</span>
           </a>
         </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8"><u>การจัดการข้อมูลการจอง</u></h6>
+        </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="<?php echo base_url(); ?>/index.php/Admin/admin_all_repair">
+          <a class="nav-link text-white " href="<?php echo base_url(); ?>/index.php/Admin/admin_all_Booking">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
-            <span class="nav-link-text ms-1">ข้อมูลการฝากส่งซ่อม</span>
+            <span class="nav-link-text ms-1">ข้อมูลการจองห้องประชุม</span>
           </a>
         </li>
         <li class="nav-item">
@@ -76,7 +84,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
             </div>
-            <span class="nav-link-text ms-1">RTL</span>
+            <span class="nav-link-text ms-1">ข้อมูลห้องประชุม</span>
           </a>
         </li>
         <li class="nav-item">
@@ -84,11 +92,11 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
-            <span class="nav-link-text ms-1">Notifications</span>
+            <span class="nav-link-text ms-1">ข้อมูลระบบ</span>
           </a>
         </li>
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8"><u>การจัดการข้อมูลส่วนตัว</u></h6>
         </li>
         <li class="nav-item"><?php $session = session(); ?>
 

@@ -3,7 +3,8 @@
 namespace App\Controllers;  
 use CodeIgniter\Controller;
 use App\Models\UserModel;
-use App\Models\RepairModel;
+use App\Models\EventModel;
+use App\Models\RoomModel;
 
   
 class Admin extends Controller
@@ -18,28 +19,54 @@ class Admin extends Controller
     public function index() {
         echo view('component/headerAdmin');
         $UserModel = new UserModel();
-        $RepairModel = new RepairModel();
+        $RoomModel = new RoomModel();
+        $EventModel = new EventModel();
+        $query = $EventModel->select('*')->join('room', 'room.room_id = events.room_id')->get();
+        // ->where('meeting_status',1)
+        $data = $query->getResult();
+    
+        foreach ($data as $key => $value) {
+          $data['data'][$key]['id'] = $value->meeting_id;
+          $data['data'][$key]['room_name'] = $value->room_name. ' [ สถานะการจอง : ' . $value->meeting_status.' ] ' ;
+          $data['data'][$key]['startcontent'] = $value->start_date;
+          $data['data'][$key]['endcontent'] = $value->end_date;
+          $data['data'][$key]['name'] = $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname;
+          $data['data'][$key]['titlePopover'] = ' ' . $value->meeting_title;
+          $data['data'][$key]['phone'] = ' ' . $value->meeting_phone;
+    
+          $data['data'][$key]['title'] = $value->meeting_title . '  /  จองโดย : ' . $value->meeting_titlename . ' ' . $value->meeting_name . ' ' . $value->meeting_lastname . '  /  เบอร์โทรศัพท์ : ' . $value->meeting_phone . '  /  ห้องประชุม : ' . $value->room_name;
+          $data['data'][$key]['start'] = $value->start_date;
+          $data['data'][$key]['end'] = $value->end_date;
+          $data['data'][$key]['backgroundColor'] = $value->backgroundColor;
+          $data['data'][$key]['textColor'] = "white";
+          $data['data'][$key]['description'] = 'ห้องประชุม : ' . $value->room_name . '  / รายละเอียด : ' . $value->meeting_detail . '  /  เริ่ม : ' . $value->start_date . '  /  สิ้นสุด :' . $value->end_date;
+        }
+    
+    
+        $data['room'] = $RoomModel->orderBy('room_id')->findAll();
+    
         $data['countUser1'] = $UserModel->where('user_status',0)->get()->getNumRows();
         $data['countUser2'] = $UserModel->where('user_status',1)->get()->getNumRows();
-        $data['countWork1'] = $RepairModel->where('case_status <',3)->get()->getNumRows();
-        $data['countWork2'] = $RepairModel->where('case_status',3)->get()->getNumRows();
-        $year_wise = $this->db->query("SELECT COUNT(user_id) as count,MONTHNAME(user_created_at) as month FROM users GROUP BY MONTHNAME(user_created_at) ORDER BY month ASC")->getResult();
-		$month_wise = $this->db->query("SELECT COUNT(user_id) as count,YEAR(user_created_at) as year FROM users GROUP BY YEAR(user_created_at) ORDER BY year ASC")->getResult();
+        $data['Accept'] = $EventModel->where('meeting_status',1)->get()->getNumRows();
+        $data['WaitAccept'] = $EventModel->where('meeting_status',0)->get()->getNumRows();
+
+        // $year_wise = $this->db->query("SELECT COUNT(user_id) as count,MONTHNAME(user_created_at) as month FROM users GROUP BY MONTHNAME(user_created_at) ORDER BY month ASC")->getResult();
+		// $month_wise = $this->db->query("SELECT COUNT(user_id) as count,YEAR(user_created_at) as year FROM users GROUP BY YEAR(user_created_at) ORDER BY year ASC")->getResult();
        
-        $month_work = $this->db->query("SELECT COUNT(case_id) as count,MONTHNAME(date_save) as month FROM repair_case GROUP BY MONTHNAME(date_save) ORDER BY month ASC")->getResult();
-		$year_work = $this->db->query("SELECT COUNT(case_id) as count,YEAR(date_save) as year FROM repair_case GROUP BY YEAR(date_save) ORDER BY year ASC")->getResult();
+        // $month_work = $this->db->query("SELECT COUNT(case_id) as count,MONTHNAME(date_save) as month FROM repair_case GROUP BY MONTHNAME(date_save) ORDER BY month ASC")->getResult();
+		// $year_work = $this->db->query("SELECT COUNT(case_id) as count,YEAR(date_save) as year FROM repair_case GROUP BY YEAR(date_save) ORDER BY year ASC")->getResult();
 
-		$com_work = $this->db->query("SELECT COUNT(case_id) as count,MONTHNAME(date_save) as month FROM repair_case WHERE case_status ='3' GROUP BY MONTHNAME(date_save) ORDER BY month ASC")->getResult();
-		$comyear_work = $this->db->query("SELECT COUNT(case_id) as count,YEAR(date_save) as year FROM repair_case WHERE case_status ='3' GROUP BY YEAR(date_save) ORDER BY  year ASC")->getResult();
+		// $com_work = $this->db->query("SELECT COUNT(case_id) as count,MONTHNAME(date_save) as month FROM repair_case WHERE case_status ='3' GROUP BY MONTHNAME(date_save) ORDER BY month ASC")->getResult();
+		// $comyear_work = $this->db->query("SELECT COUNT(case_id) as count,YEAR(date_save) as year FROM repair_case WHERE case_status ='3' GROUP BY YEAR(date_save) ORDER BY  year ASC")->getResult();
 
-		$data['year_wise'] = $year_wise;
-		$data['month_wise'] = $month_wise;
-        $data['year_work'] = $year_work;
-		$data['month_work'] = $month_work;
-        $data['com_work'] = $com_work;
-        $data['comyear_work'] = $comyear_work;
+		// $data['year_wise'] = $year_wise;
+		// $data['month_wise'] = $month_wise;
+        // $data['year_work'] = $year_work;
+		// $data['month_work'] = $month_work;
+        // $data['com_work'] = $com_work;
+        // $data['comyear_work'] = $comyear_work;
 
-        return view('/dashboard', $data);
+        return view('AdminPage/dashboard',$data);
 
     }
 
@@ -65,38 +92,31 @@ class Admin extends Controller
         $data['admin'] = $UserModel->Where('user_status', '1')->findAll();
         return view('AdminPage/admin_all_admin', $data);
     }
-    public function getAllrepair()
+    public function getAllBooking()
     {
         echo view('component/headerAdmin');
-        $RepairModel = new RepairModel();
-        $data['count0'] = $RepairModel->orderBy('case_status')->get()->getNumRows();
-        $data['count1'] = $RepairModel->where('case_status', 1)->get()->getNumRows();
-        $data['count2'] = $RepairModel->where('case_status', 2)->get()->getNumRows();
-        $data['count3'] = $RepairModel->where('case_status', 3)->get()->getNumRows();
-        $data['count4'] = $RepairModel->where('case_status', 4)->get()->getNumRows();
-        $data['repair'] = $RepairModel->orderBy('case_id', 'DESC')->findAll();
-        return view('AdminPage/admin_all_repair', $data);
+        $EventModel = new EventModel();
+        $data['count0'] = $EventModel->orderBy('meeting_status')->get()->getNumRows();
+        $data['count1'] = $EventModel->where('meeting_status', 0)->get()->getNumRows();
+        $data['count2'] = $EventModel->where('meeting_status', 1)->get()->getNumRows();
+        $data['count3'] = $EventModel->where('meeting_status', 2)->get()->getNumRows();
+        $data['booking'] = $EventModel->orderBy('meeting_id' , 'DESC')->join('room', 'room.room_id = events.room_id')->findAll();
+        return view('AdminPage/admin_all_Booking', $data);
     }
 
     public function bystatusAdmin($id = null)
     {
         echo view('component/headerAdmin');
-        $RepairModel = new RepairModel();
-        $data['count0'] = $RepairModel->orderBy('case_status')->get()->getNumRows();
-        $data['count1'] = $RepairModel->where('case_status', 1)->get()->getNumRows();
-        $data['count2'] = $RepairModel->where('case_status', 2)->get()->getNumRows();
-        $data['count3'] = $RepairModel->where('case_status', 3)->get()->getNumRows();
-        $data['count4'] = $RepairModel->where('case_status', 4)->get()->getNumRows();
-        $data['repair'] = $RepairModel->where('case_status', $id)->findAll();
-        return view('AdminPage/admin_all_repair', $data);
+        $EventModel = new EventModel();
+        $data['count0'] = $EventModel->orderBy('meeting_status')->get()->getNumRows();
+        $data['count1'] = $EventModel->where('meeting_status', 0)->get()->getNumRows();
+        $data['count2'] = $EventModel->where('meeting_status', 1)->get()->getNumRows();
+        $data['count3'] = $EventModel->where('meeting_status', 2)->get()->getNumRows();
+        $data['booking'] = $EventModel->where('meeting_status', $id)->join('room', 'room.room_id = events.room_id')->findAll();
+        return view('AdminPage/admin_all_Booking', $data);
     }
 
-    public function Admindeleterepair($id = null) {
-        $RepairModel = new RepairModel();
-        $RepairModel->where('case_id', $id)->delete($id);
-        return redirect()->to('/index.php/Admin/admin_all_repair')->with('profilesuccess', 'ลบการสั่งซ่อมสำเร็จ');
-    }
-
+   
     public function updateProfileAdmin($id)
     {
         $UserModel = new UserModel();
@@ -237,6 +257,35 @@ class Admin extends Controller
 
         $RepairModel->update($id, $data);
         return redirect()->to('/index.php/Admin/admin_all_repair')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
+    }
+
+    public function AcceptStatus($id = null)
+    {
+        echo view('component/headerAdmin');
+        $EventModel = new EventModel();
+        $test = $EventModel->set('meeting_status', 1)->where('meeting_id', $id)->update($id);
+        
+        if($test === TRUE){
+            return redirect()->to('/index.php/Admin/admin_all_Booking')->with('success', 'ยืนยันการจองห้องประชุมเรียบร้อย');
+        }
+
+
+
+    }
+    public function CancelStatus($id = null)
+    {
+        echo view('component/headerAdmin');
+        $EventModel = new EventModel();
+        $test = $EventModel->set('meeting_status', 2)->where('meeting_id', $id)->update($id);
+        if($test === TRUE){
+            return redirect()->to('/index.php/Admin/admin_all_Booking')->with('success', 'ยกเลิกการจองห้องประชุมเรียบร้อย');
+        }
+    }
+
+    public function Admindeleteinformation($id = null) {
+        $EventModel = new EventModel();
+        $EventModel->where('meeting_id', $id)->delete($id);
+        return redirect()->to('/index.php/Admin/admin_all_Booking')->with('success', 'ลบการจองห้องประชุมเรียบร้อย');
     }
 
 

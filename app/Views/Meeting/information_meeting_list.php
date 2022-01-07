@@ -5,6 +5,49 @@
     /* padding:1px 20px 1px 20px; */
   }
 </style>
+<?php
+ 
+$dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+$monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+$monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function thai_date_and_time($time){   // 19 ธันวาคม 2556 เวลา 10:10:43
+    global $dayTH,$monthTH;   
+    $thai_date_return = date("j",$time);   
+    $thai_date_return.=" ".$monthTH[date("n",$time)];   
+    $thai_date_return.= " ".(date("Y",$time)+543);   
+    $thai_date_return.= " เวลา ".date("H:i:s",$time);
+    return $thai_date_return;   
+} 
+function thai_date_and_time_short($time){   // 19  ธ.ค. 2556 10:10:4
+    global $dayTH,$monthTH_brev;   
+    $thai_date_return = date("j",$time);   
+    $thai_date_return.=" ".$monthTH_brev[date("n",$time)];   
+    $thai_date_return.= " ".(date("Y",$time)+543);   
+    $thai_date_return.= " ".date("H:i:s",$time);
+    return $thai_date_return;   
+} 
+function thai_date_short($time){   // 19  ธ.ค. 2556a
+    global $dayTH,$monthTH_brev;   
+    $thai_date_return = date("j",$time);   
+    $thai_date_return.=" ".$monthTH_brev[date("n",$time)];   
+    $thai_date_return.= " ".(date("Y",$time)+543);   
+    return $thai_date_return;   
+} 
+function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+    global $dayTH,$monthTH;   
+    $thai_date_return = date("j",$time);   
+    $thai_date_return.=" ".$monthTH[date("n",$time)];   
+    $thai_date_return.= " ".(date("Y",$time)+543);   
+    return $thai_date_return;   
+} 
+function thai_date_short_number($time){   // 19-12-56
+    global $dayTH,$monthTH;   
+    $thai_date_return = date("d",$time);   
+    $thai_date_return.="-".date("m",$time);   
+    $thai_date_return.= "-".substr((date("Y",$time)+543),-2);   
+    return $thai_date_return;   
+} 
+?>
 <div class="app-content content">
   <div class="content-wrapper">
     <div class="content-wrapper-before"></div>
@@ -113,13 +156,31 @@
                                             </div>
                                         </div>
                                     </div> -->
-
+    <div>
+                                                        <center> <a href="<?php echo base_url(); ?>/index.php/meeting/meeting_information" class="btn btn-info">ทั้งหมด </span></a>
+                                                            <a href="<?php echo base_url(); ?>/index.php/Meeting/bystatusMeeting/0?" class="btn btn-warning">กำลังรออนุมัติ</span></a>
+                                                            <a href="<?php echo base_url(); ?>/index.php/Meeting/bystatusMeeting/1?" class="btn btn-success">อนุมัติเรียบร้อย</span></a>
+                                                            <a href="<?php echo base_url(); ?>/index.php/Meeting/bystatusMeeting/2?" class="btn btn-danger">รายการยกเลิก</span></a>
+                                                        </center>
+                                                    </div>
 
                   <div style="width: 100%; padding-left: -15px;">
                     <div class="table-responsive">
                       <table class="table table-bordered" id="users-list">
-
-
+                      <?php
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","มกราคม.","กุมภาพันธ์.","มีนาคม.","เมษายน.","พฤษภาคม.","มิถุนายน.","กรกฎาคม.","สิงหาคม.","กันยายน.","ตุลาคม.","พฤศจิกายน.","ธันวาคม.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return " $strDay $strMonthThai $strYear   <b>เวลา</b> : $strHour:$strMinute";
+	}
+?>
                         <br><br>
                         <thead>
                           <tr>
@@ -135,13 +196,16 @@
                           </tr>
                         </thead>
                         <tbody>
+                  
                           <?php if ($user) : ?>
                             <?php foreach ($user as $user) : ?>
                               <tr>
                                 <td>เลขที่บันทึก<?php echo $user['meeting_id']; ?></td>
-                                <td>
-                                  เริ่ม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo $user['start_date']; ?> น.<br>
-                                  สิ้นสุด : <?php echo $user['end_date']; ?> น.
+                                <td>                            
+                                  <b>เริ่ม</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?php $strDate = $user['start_date'];
+                                  echo DateThai($strDate); ?> น.<br>
+                                 <b> สิ้นสุด</b> : <?php $strDate = $user['end_date'];
+                                  echo DateThai($strDate); ?> น.
                                 </td>
                                 <td>
                                   <b><?php echo $user['meeting_titlename']; ?> <?php echo $user['meeting_name']; ?> <?php echo $user['meeting_lastname']; ?></b><br>
@@ -233,7 +297,16 @@
     $('#users-list').DataTable({
       "order": [
         [0, "DESC"]
-      ]
+      ],
+      "columnDefs": [
+    { "width": "5%", "targets": 0 },
+    { "width": "25%", "targets": 1 },
+    { "width": "20%", "targets": 2 },
+    { "width": "30%", "targets": 3 },
+    { "width": "10%", "targets": 4 },
+    { "width": "5%", "targets": 5 },
+    { "width": "5%", "targets": 6 },
+  ]
     });
   });
 

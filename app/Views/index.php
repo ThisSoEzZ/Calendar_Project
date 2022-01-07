@@ -20,11 +20,12 @@
 
     hr {
         text-align: center;
-        border-width:0;
-        color:purple;
-        background-color:purple;
-        height:2px;
+        border-width: 0;
+        color: purple;
+        background-color: purple;
+        height: 2px;
     }
+
     #calendar {
         box-shadow: 0px 0px 10px #000;
         padding: 15px;
@@ -65,21 +66,22 @@
 
             },
 
-        
+
 
             eventRender: function(eventObj, $el) {
                 $el.popover({
                     html: true,
-                    title: '<div class="center"><b><i class="ficon ft-airplay"></i> '+eventObj.room_name+'<b><hr></div>',
-                    content:'<i class="ficon ft-message-circle"></i> ประชุมเรื่อง :'+eventObj.titlePopover+'<br> <br><i class="ficon ft-clock"></i> เริ่มประชุม : '+ eventObj.startcontent+' น.'+
-                    '<br> <i class="ficon ft-clock"></i> สิ้นสุดประชุม :'+eventObj.endcontent+' น.'+'<br><i class="ficon ft-user"></i> จองโดย :'+eventObj.name+'<br>'+'<i class="ficon ft-phone"></i> เบอร์โทรศัพท์ :'+eventObj.phone, 
+                    title: '<div class="center"><b><i class="ficon ft-airplay"></i> ' + eventObj.room_name + '<b><hr></div>',
+                    
+                    content: '<i class="ficon ft-message-circle"></i> ประชุมเรื่อง :' + eventObj.titlePopover + '<br> <br><i class="ficon ft-clock"></i> เริ่มประชุม : ' + eventObj.startcontent + ' น.' +
+                        '<br> <i class="ficon ft-clock"></i> สิ้นสุดประชุม :' + eventObj.endcontent + ' น.' + '<br><i class="ficon ft-user"></i> จองโดย :' + eventObj.name + '<br>' + '<i class="ficon ft-phone"></i> เบอร์โทรศัพท์ :' + eventObj.phone,
                     trigger: 'hover',
                     placement: 'top',
                     container: 'body'
                 });
             },
 
-    
+
             events: events,
             // eventColor: '#8B008B',
             locale: 'th',
@@ -150,7 +152,7 @@
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
                                         <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a href="<?php echo base_url(); ?>/index.php" data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                         <li><a data-action="close"><i class="ft-x"></i></a></li>
 
@@ -159,16 +161,23 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <a href="<?php echo base_url(); ?>/index.php/FullCalendar/index" class="btn btn-info">ทั้งหมด </span></a>
+                                    <!-- <a href="<?php echo base_url(); ?>/index.php/FullCalendar/index" class="btn btn-info">ทั้งหมด </span></a>
                                     <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/0?" class="btn btn-warning">กำลังรออนุมัติ</span></a>
                                     <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/1?" class="btn btn-success">อนุมัติเรียบร้อย</span></a>
-                                    <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/2?" class="btn btn-danger">รายการยกเลิก</span></a>
+                                    <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/2?" class="btn btn-danger">รายการยกเลิก</span></a> -->
 
+                                    <!-- <select name="forma" onchange="location = this.value;">
+                                        <option value="<?php echo base_url(); ?>/index.php/FullCalendar/index">เลือกห้อง</option>
+                                        <option value="<?php echo base_url(); ?>/index.php/FullCalendar/byroomselect/1?">ห้อง VDO Conference 1 อาคาร 2 ชั้น 3</option>
+                                        <option value="<?php echo base_url(); ?>/index.php/FullCalendar/byroomselect/2?">ห้อง VDO Conference 2 อาคาร 2 ชั้น 3 </option>
+                                        <option value="<?php echo base_url(); ?>/index.php/FullCalendar/byroomselect/2?">Sitemap</option>
 
+                                    </select> -->
+                                    <div>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+                                    <center><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
                                         ค้นหา
-                                    </button>
+                                    </button> </center>
 
                                     <!-- Modal -->
 
@@ -182,13 +191,13 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div>
+                                                    <!-- <div>
                                                         <center> <a href="<?php echo base_url(); ?>/index.php/FullCalendar/index" class="btn btn-info">ทั้งหมด </span></a>
                                                             <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/0?" class="btn btn-warning">กำลังรออนุมัติ</span></a>
                                                             <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/1?" class="btn btn-success">อนุมัติเรียบร้อย</span></a>
                                                             <a href="<?php echo base_url(); ?>/index.php/FullCalendar/bystatus/2?" class="btn btn-danger">รายการยกเลิก</span></a>
                                                         </center>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
                                                 <div class="container">
@@ -208,9 +217,10 @@
                                                         <div class="input-group mb-3">
 
                                                             <select class="custom-select" id="customSelect" name="q" aria-describedby="button-addon3">
+                                                            <option value="">เลือกห้องที่ต้องการค้นหา</option>
                                                                 <?php if ($room) : ?>
                                                                     <?php foreach ($room as $room) : ?>
-                                                                        <option value="<?php echo $room['room_id']; ?>"><?php echo $room['room_name']; ?></option>
+                                                                        <option value="<?php echo $room['room_name']; ?>"><?php echo $room['room_name']; ?></option>
 
 
                                                                     <?php endforeach; ?>
@@ -232,7 +242,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div>
                                     <!-- <form action="<?php echo base_url(); ?>/index.php/FullCalendar/getRecords">
                                         <div class="input-group mb-3">
 

@@ -26,6 +26,14 @@
     <!-- END Custom CSS--> 
     <!-- bg-purple -->
   </head>
+<style>
+#inner {
+   display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+  </style>
+
   <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
 
     <!-- fixed-top-->
@@ -41,9 +49,9 @@
          
 
        
-           
+        
 
-              
+      
                 <ul class="dropdown-menu">
                   <li class="arrow_box">
                     <form action="<?php echo base_url(); ?>/index.php/FullCalendar/getRecords">
@@ -65,11 +73,14 @@
                   
                 </ul>
               </li>   
-
-              <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide"  href="<?php echo base_url(); ?>/index.php"><i class="ficon ft-home">ระบบจองห้องประชุม กฟก.3</i></a>
+            
 
             </ul>
+            <ul class="nav navbar-nav mr-auto float-center">
 
+            <li id="inner" class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide"  href="<?php echo base_url(); ?>/index.php"><i class="ficon ft-home">
+               ระบบจองห้องประชุม กฟก.3</i></a>
+               </ul>
 
 
             <!-- <ul class="nav navbar-nav float-right">         
@@ -112,9 +123,7 @@
             <?php } else{ ?>
            
             <ul class="nav navbar-nav float-right">
-          
           <li>
-
             <a href="<?php echo base_url(); ?>/index.php/login/signin"  class="btn btn-primary btn-icon">
               <span class="btn-inner--icon">
                 <i class="fa fa-sign-in"></i>
@@ -147,10 +156,10 @@
           <?php $session = session(); ?>
 
 
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/insert/<?php echo $session->get('user_id');?>"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">จองห้องประชุม</span></a>
+          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/insert/<?php echo $session->get('user_id');?>"><i class="ft-clock"></i><span class="menu-title" data-i18n="">จองห้องประชุม</span></a>
           </li>
      
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/meeting/meeting_information"><i class="ft-droplet"></i><span class="menu-title" data-i18n="">ข้อมูลการจอง</span></a>
+          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/meeting/meeting_information"><i class="ft-info"></i><span class="menu-title" data-i18n="">ข้อมูลการจอง</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="cards.html"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
           </li>
@@ -162,7 +171,7 @@
           </li>
           <li class=" nav-item"><a href="form-elements.html"><i class="ft-layout"></i><span class="menu-title" data-i18n="">Form Elements</span></a> -->
           </li>
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/report/meeting_report"><i class="ft-book"></i><span class="menu-title" data-i18n="">รายงานการจอง</span></a>
+          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/report/meeting_report"><i class="ft-bar-chart"></i><span class="menu-title" data-i18n="">รายงานการจอง</span></a>
 
           <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/room/information_room"><i class="ft-book"></i><span class="menu-title" data-i18n="">ห้องประชุม</span></a>
 

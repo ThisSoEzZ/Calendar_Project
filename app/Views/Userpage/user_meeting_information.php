@@ -67,6 +67,20 @@
                             <th></th>
                             <th></th>
                           </tr>
+                             <?php
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","มกราคม.","กุมภาพันธ์.","มีนาคม.","เมษายน.","พฤษภาคม.","มิถุนายน.","กรกฎาคม.","สิงหาคม.","กันยายน.","ตุลาคม.","พฤศจิกายน.","ธันวาคม.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return " $strDay $strMonthThai $strYear   <b>เวลา</b> : $strHour:$strMinute";
+	}
+?>
                         </thead>
                         <tbody>
                           <?php if ($user) : ?>
@@ -74,8 +88,10 @@
                               <tr>
                                 <td>เลขที่บันทึก<?php echo $user['meeting_id']; ?></td>
                                 <td>
-                                  เริ่ม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo $user['start_date']; ?> น.<br>
-                                  สิ้นสุด : <?php echo $user['end_date']; ?> น.
+                                <b>เริ่ม</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<?php $strDate = $user['start_date'];
+                                  echo DateThai($strDate); ?> น.<br>
+                                 <b> สิ้นสุด</b> : <?php $strDate = $user['end_date'];
+                                  echo DateThai($strDate); ?> น.
                                 </td>
                                 <td>
                                   <b><?php echo $user['meeting_titlename']; ?> <?php echo $user['meeting_name']; ?> <?php echo $user['meeting_lastname']; ?></b><br>
@@ -192,7 +208,14 @@
     $('#users-list').DataTable({
       "order": [
         [0, "DESC"]
-      ]
+      ],
+      "columnDefs": [
+    { "width": "3%", "targets": 0 },
+    { "width": "25%", "targets": 1 },
+    { "width": "20%", "targets": 2 },
+    { "width": "30%", "targets": 3 },
+
+  ]
     });
   });
 

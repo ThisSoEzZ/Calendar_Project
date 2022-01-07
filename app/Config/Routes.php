@@ -49,23 +49,26 @@ $routes->get('/User/edit_password/(:num)', 'User::editpassword/$1',['filter' => 
 $routes->get('/User/updatePassword/(:num)', 'User::updatePassword/$1',['filter' => 'authGuard']);
 $routes->get('/User/meeting_user_information/(:num)', 'meeting::meeting_user_information/$1',['filter' => 'authGuard']);
 
-$routes->get('/Admin/admin_all_user', 'Admin::getAlluser');
-$routes->get('/Admin/admin_all_admin', 'Admin::getAllAdmin');
-$routes->get('/Admin/admin_all_repair', 'Admin::getAllrepair');
-$routes->get('/Admin/Admindeleterepair/(:num)', 'Admin::Admindeleterepair/$1');
-$routes->get('/Admin/admin_profile/(:num)', 'Admin::admin_profile/$1');
-$routes->get('/Admin/updateProfileAdmin/(:num)', 'Admin::updateProfileAdmin/$1');
-$routes->get('/Admin/bystatusAdmin/(:num)', 'Admin::bystatusAdmin/$1');
-$routes->get('/Admin/editpassword/(:num)', 'Admin::editpassword/$1');
-$routes->get('/Admin/updatePasswordAdmin/(:num)', 'Admin::updatePasswordAdmin/$1');
-$routes->get('/Admin/admin_Userprofile/(:num)', 'Admin::admin_Userprofile/$1');
-$routes->get('/Admin/editpasswordAdmin/(:num)', 'Admin::editpasswordAdmin/$1');
-$routes->get('/Admin/updatePasswordUser/(:num)', 'Admin::updatePasswordUser/$1');
-$routes->get('/Admin/admin_repairDetail/(:num)', 'Admin::admin_repairDetail/$1');
-$routes->get('/Admin/admin_Adminprofile/(:num)', 'Admin::admin_Adminprofile/$1');
-$routes->get('/Admin/editAdminpasswordAdmin/(:num)', 'Admin::editAdminpasswordAdmin/$1');
-$routes->get('/Admin/updateAdminPasswordAdmin/(:num)', 'Admin::updateAdminPasswordAdmin/$1');
-$routes->get('/Admin/updateCaseRepair/(:num)', 'Admin::updateCaseRepair/$1');
+
+$routes->get('/Admin/admin_all_user', 'Admin::getAlluser',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_all_admin', 'Admin::getAllAdmin',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_all_Booking', 'Admin::getAllBooking',['filter' => 'authGuard']);
+$routes->get('/Admin/Admindeleteinformation/(:num)', 'Admin::Admindeleteinformation/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_profile/(:num)', 'Admin::admin_profile/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/updateProfileAdmin/(:num)', 'Admin::updateProfileAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/bystatusAdmin/(:num)', 'Admin::bystatusAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/editpassword/(:num)', 'Admin::editpassword/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/updatePasswordAdmin/(:num)', 'Admin::updatePasswordAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_Userprofile/(:num)', 'Admin::admin_Userprofile/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/editpasswordAdmin/(:num)', 'Admin::editpasswordAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/updatePasswordUser/(:num)', 'Admin::updatePasswordUser/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_repairDetail/(:num)', 'Admin::admin_repairDetail/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/admin_Adminprofile/(:num)', 'Admin::admin_Adminprofile/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/editAdminpasswordAdmin/(:num)', 'Admin::editAdminpasswordAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/updateAdminPasswordAdmin/(:num)', 'Admin::updateAdminPasswordAdmin/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/updateCaseRepair/(:num)', 'Admin::updateCaseRepair/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/AcceptStatus/(:num)', 'Admin::AcceptStatus/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/CancelStatus/(:num)', 'Admin::CancelStatus/$1',['filter' => 'authGuard']);
 
 
 // $routes->post('updateProfile', 'User::updateProfile');
@@ -86,14 +89,18 @@ $routes->get('/Meeting/delete/(:num)', 'Meeting::delete_meeting_user/$1',['filte
 $routes->get('/insert/(:num)', 'Meeting::insert/$1',['filter' => 'authGuard']);
 $routes->get('/insert', 'Meeting::insert',['filter' => 'authGuard']);
 $routes->post('submit-form', 'Meeting::store',['filter' => 'authGuard']);
+$routes->get('/Meeting/report_meeting_detail/(:any)/(:num)', 'Report::report_meeting_detail/$1/$2',['filter' => 'authGuard']);
+$routes->get('/Meeting/delete/(:num)', 'Meeting::delete_meeting_user/$1',['filter' => 'authGuard']);
+$routes->get('/Meeting/bystatusMeeting/(:num)', 'Meeting::bystatusMeeting/$1');
 
+
+$routes->get('/Admin/bystatusAdmin/(:num)', 'Admin::bystatusAdmin/$1');
 
 $routes->get('/room/information_room', 'Room::index');
 $routes->get('/room/room_detail/(:num)', 'Room::GetRoomId/$1');
 
 $routes->get('/report/meeting_report', 'Report::index');
-$routes->get('/TestEvent/(:num)', 'Report::Test/$1',['filter' => 'authGuard']);
-
+$routes->get('/TestEvent/(:any)/(:num)', 'Report::Test/$1/$2',['filter' => 'authGuard']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing

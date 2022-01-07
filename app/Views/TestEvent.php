@@ -1,65 +1,79 @@
-<div class="app-content content">
-    <div class="content-wrapper">
-        <div class="content-wrapper-before"></div>
-        <div class="content-header row">
-            <div class="content-header-left col-md-4 col-12 mb-2">
-                <h3 class="content-header-title">Charts</h3>
-            </div>
-            <div class="content-header-right col-md-8 col-12">
-                <div class="breadcrumbs-top float-md-right">
-                    <div class="breadcrumb-wrapper mr-1">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active">Charts
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-body">
-            <!-- Bar charts section start -->
-            <section id="chartjs-bar-charts">
-                <!-- Column Chart -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Column Chart</h4>
-                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+<!Doctype html>
+<html>
+<head>
+  <title>Google Date Wise Bar and Line Chart Codeigniter Tutorial</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+  <script type="text/javascript">
+      google.charts.load('visualization', "1", {
+          packages: ['corechart']
+      });
+  </script>
+</head>
+<body>
+    
+<div class="row">
 
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-content collapse show">
-                                <div class="card-body">
-                                    <?php echo $room2['room_name']; ?>
-                                    <br>
-                                    <?php
-                                    foreach ($year_wise as $row) {
-                                        echo "<br>ปี : " . $row->year . '-------' . "จองทั้งหมด : " . $row->total . "";
-                                    }
-                                    ?>
-
-
-
-
-
-                                    <?php
-                                    foreach ($month_wise as $row) {
-                                        echo "<br>เดือน : " . $row->month . '-------' . "จองทั้งหมด : " . $row->total . "";
-                                    }
-                                    ?>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="col-md-12">
+  <?php 
+            //  foreach ($year_wise as $row){?>
+    <div id="line_date_wise" style="width: 900px; height: 500px; margin: 0 auto"></div>
+    <div id="bar_date_wise" style="width: 900px; height: 500px; margin: 0 auto"></div>
+            
+  </div>  
+</div>
+</body>
+</html>
+<script language="JavaScript">
+  // Draw the pie chart for registered users month wise
+  google.charts.setOnLoadCallback(lineChart);
+ 
+  // Draw the pie chart for registered users year wise
+  google.charts.setOnLoadCallback(barChart);
+   
+  //for
+  function lineChart() {
+ 
+        /* Define the chart to be drawn.*/
+        var data = google.visualization.arrayToDataTable([
+            
+            ['ปี', 'จำนวนการจอง'],
+            <?php 
+             foreach ($year_wise as $row){
+             echo "['".$row->year."',".$row->total."],";
+             }
+             ?>
+        ]);
+ 
+        var options = {
+          title: 'ปีจำนวนการจอง',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          is3D: true
+        };
+        /* Instantiate and draw the chart.*/
+        var chart = new google.visualization.LineChart(document.getElementById('line_date_wise'));
+        chart.draw(data, options);
+  }
+  // for
+  function barChart() {
+ 
+    /* Define the chart to be drawn.*/
+    var data = google.visualization.arrayToDataTable([
+        ['เดือน', 'จำนวนการจอง','ปี'],
+      
+        <?php 
+         foreach ($month_wise as $row){
+         echo "['".$row->month."',".$row->total."],";
+         }
+         ?>
+    ]);
+    var options = {
+        title: 'เดือนจำนวนการจอง',
+        is3D: true,
+    };
+    /* Instantiate and draw the chart.*/
+    var chart = new google.visualization.BarChart(document.getElementById('bar_date_wise'));
+    chart.draw(data, options);
+  }
+  
+</script>

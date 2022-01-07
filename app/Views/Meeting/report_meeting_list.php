@@ -25,14 +25,14 @@
       <section id="header-footer">
 
         <div class="row match-height">
-          
-          <?php if ($room) : ?>
-            <?php foreach ($room as $room) : ?>
+        <?php
+          foreach ($Alltotal as $row) { ?>
+
               <div class="col-lg-4 col-md-12">
 
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title"><?php echo $room['room_name']; ?></h4>
+                    <h4 class="card-title"><?php echo $row->room_name ?></h4>
                     <!-- <h6 class="card-subtitle text-muted">Basic Card With Header & Footer</h6> -->
 
                   </div>
@@ -40,11 +40,17 @@
                   <img class="" src="<?php echo base_url(); ?>/theme-assets/Test1.png" alt="Card image cap">
                   <hr>
                   <div class="card-body">
-                   
+
+                  <p class="card-text">การจองห้องประชุมทั้งหมด : <?php echo $row->TotalCount ?> ครั้ง</p>
+                  <p class="card-text">จำนวนคนที่เข้าร่วมประชุมทั้งหมด : <?php echo $row->total ?> คน</p>
+                  <p class="card-text">ปีล่าสุด : <?php echo $row->year ?></p>
+
+
+
                   </div>
                   <div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
                     <span class="float-right">
-                      <a href="<?php echo base_url(); ?>/index.php/room/room_detail/<?php echo $room['room_id']; ?>" class="card-link">ดูรายละเอียด
+                      <a href="<?php echo base_url(); ?>/index.php/Meeting/report_meeting_detail/<?php echo $row->room_id ?>/<?php echo $row->year ?>" class="card-link">ดูรายละเอียด
                         <i class="la la-angle-right"></i>
                       </a>
                     </span>
@@ -52,8 +58,13 @@
 
 
                 </div>
-              </div> <?php endforeach; ?>
-          <?php endif; ?>
+              </div> 
+
+       
+          <?php
+          }
+          ?>
+
 
 
         </div>

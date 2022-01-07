@@ -1,20 +1,109 @@
-<script src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://www.google.com/jsapi"></script>
-<script>
-      google.charts.load('visualization', "1", {packages: ['corechart']
-      });
 
-  </script>
-  <script>
-    function ic3bootstrapLocal(options) {    
-    $script("https://www.gstatic.com/charts/loader.js", function () {
-      google.charts.load('current', {packages: ['corechart', 'geochart', 'table', 'sankey', 'calendar'], 'language': 'th'});
-        google.charts.setOnLoadCallback(function(){
-          ic3globals.libs.GoogleViz = true;
-          options.callback && options.callback();
+<!-- Fullcalendar Starts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/locale/th.js"></script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
+<link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
+
+
+<style>
+    .fc-event {
+        cursor: pointer;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    hr {
+        text-align: center;
+        border-width: 0;
+        color: purple;
+        background-color: purple;
+        height: 2px;
+    }
+
+    #calendar {
+        box-shadow: 0px 0px 10px #000;
+        padding: 15px;
+        background: #fff;
+    }
+
+    #calendar-container {
+        position: fixed;
+        top: 0%;
+        text-align: center;
+        left: 10%;
+        right: 10%;
+        bottom: 20%;
+     
+    } 
+    .pad{
+      padding: 550px;
+    }
+</style>
+
+<script>
+    jQuery(document).ready(function($) {
+        var events = <?php echo json_encode($data) ?>;
+
+        $('#calendar').fullCalendar({
+            height: 850,
+
+            monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+            monthNamesShort: ['ม.ค', 'ก.พ', 'มี.ค', 'เม.ย', 'พ.ค', 'มิ.ย', 'ก.ค', 'ส.ค', 'ก.ย', 'ต.ค', 'พ.ย', 'ธ.ค'],
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,,listWeek'
+            },
+            buttonText: {
+                today: 'วันนี้',
+                month: 'เดือน',
+                week: 'สัปดาห์',
+                day: 'วัน',
+                list: 'กำหนดการ'
+
+            },
+
+
+
+            eventRender: function(eventObj, $el) {
+                $el.popover({
+                    html: true,
+                    title: '<div class="center"><b><i class="ficon ft-airplay"></i> ' + eventObj.room_name + '<b><hr></div>',
+                    
+                    content: '<i class="ficon ft-message-circle"></i> ประชุมเรื่อง :' + eventObj.titlePopover + '<br> <br><i class="ficon ft-clock"></i> เริ่มประชุม : ' + eventObj.startcontent + ' น.' +
+                        '<br> <i class="ficon ft-clock"></i> สิ้นสุดประชุม :' + eventObj.endcontent + ' น.' + '<br><i class="ficon ft-user"></i> จองโดย :' + eventObj.name + '<br>' + '<i class="ficon ft-phone"></i> เบอร์โทรศัพท์ :' + eventObj.phone,
+                    trigger: 'hover',
+                    placement: 'top',
+                    container: 'body'
+                });
+            },
+
+
+            events: events,
+            // eventColor: '#8B008B',
+            locale: 'th',
+            themeSystem: 'bootstrap4',
+            timeFormat: 'H:mm น.',
+
+            eventClick: function(eventObj) {
+                window.location = '<?php echo base_url(); ?>/index.php/Meeting/DetailMeetingRoom/' + eventObj.id;
+
+                //   window.open('<?php echo base_url(); ?>/index.php/Meeting/DetailMeetingRoom/'+eventObj.id);
+            },
+
+
         });
-    })  
-} 
+
+
+
+    });
 </script>
 <script>
         <?php if (session()->getFlashdata('Success')) : ?>
@@ -39,8 +128,8 @@
               </div>
               
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">งานเหลือค้าง</p>
-                <h4 class="mb-0"><?= $countWork1 ?></h4>
+                <p class="text-sm mb-0 text-capitalize">รอการยืนยัน</p>
+                <h4 class="mb-0"><?= $WaitAccept ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -56,8 +145,8 @@
                 <i class="material-icons opacity-10">weekend</i>
               </div>
               <div class="text-end pt-1">
-              <p class="text-sm mb-0 text-capitalize">งานเสร็จสิ้น</p>
-                <h4 class="mb-0"><?= $countWork2 ?></h4>
+              <p class="text-sm mb-0 text-capitalize">ยืนยันการจองเเล้ว</p>
+                <h4 class="mb-0"><?= $Accept ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -102,285 +191,18 @@
         </div>
       </div>
       <div class="row mt-4">
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                <div class="chart"   id="year_pie">
-
-
-  
-<script>
-
-  // Draw the pie chart for registered users year wise
-  google.charts.setOnLoadCallback(yearWiseChart);
-
-  // for year wise
-  function yearWiseChart() {
- 
-    /* Define the chart to be drawn.*/
-    var data = google.visualization.arrayToDataTable([
+        <div class="container">
       
-        ['month', 'Users Count'],
-        <?php 
-         foreach ($year_wise as $row){
-         echo "['".$row->month."',".$row->count."],";
-         }
-         ?>
-    ]);
-    var options = {
-        title: 'จำนวนผู้ใช้ในเเต่ละเดือน',
-        is3D: true,
-        language: 'ja'
-    };
-    /* Instantiate and draw the chart.*/
-    var chart = new google.visualization.PieChart(document.getElementById('year_pie'));
-    chart.draw(data, options);
-  }
-</script>   
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 ">เเสดงผู้ใช้งาน</h6>
-              <p class="text-sm ">เเสดงผู้ใช้งานในเเต่ละเดือน</p>
-              <hr class="dark horizontal">
-              <!-- <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2  ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                <div class="chart" id="month_work">
-                <script>
 
-// Draw the pie chart for registered users year wise
-google.charts.setOnLoadCallback(yearWiseChart);
-
-// for year wise
-function yearWiseChart() {
-
-  /* Define the chart to be drawn.*/
-  var data = google.visualization.arrayToDataTable([
-    
-      ['month', 'Users Count'],
-      <?php 
-       foreach ($month_work as $row){
-       echo "['".$row->month."',".$row->count."],";
-       }
-       ?>
-  ]);
-  var options = {
-      title: 'จำนวนงานในเต่ละเดือน',
-      is3D: true,
-      language: 'ja'
-  };
-  /* Instantiate and draw the chart.*/
-  var chart = new google.visualization.PieChart(document.getElementById('month_work'));
-  chart.draw(data, options);
-}
-</script>   
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 "> แสดงงานทั้งหมด</h6>
-              <p class="text-sm ">แสดงงานในเเต่ละเดือน</p>
-              <hr class="dark horizontal">
-              <!-- <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> updated 4 min ago </p>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 mt-4 mb-3">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                <div class="chart" id="com_work">
-                <script>
-
-// Draw the pie chart for registered users year wise
-google.charts.setOnLoadCallback(monthWiseChart);
-
-// for year wise
-function monthWiseChart() {
-
-  /* Define the chart to be drawn.*/
-  var data = google.visualization.arrayToDataTable([
-    
-      ['month', 'Users Count'],
-      <?php 
-       foreach ($com_work as $row){
-       echo "['".$row->month."',".$row->count."],";
-       }
-       ?>
-  ]);
-  var options = {
-      title: 'จำนวนงานที่เสร็จในเเต่ละเดือน',
-      is3D: true,
-  };
-  /* Instantiate and draw the chart.*/
-  var chart = new google.visualization.PieChart(document.getElementById('com_work'));
-  chart.draw(data, options);
-}
-</script>
-
-              </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 ">จำนวนงานที่เสร็จ</h6>
-              <p class="text-sm ">จำนวนงานที่เสร็จในเเต่ละเดือน</p>
-              <hr class="dark horizontal">
-              <!-- <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm">just updated</p>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-4">
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                <div class="chart"   id="month_pie">
+              <div class="pad "id='calendar'></div>
 
 
   
-                <script>
-
-// Draw the pie chart for registered users year wise
-google.charts.setOnLoadCallback(monthWiseChart);
-
-// for year wise
-function monthWiseChart() {
-
-  /* Define the chart to be drawn.*/
-  var data = google.visualization.arrayToDataTable([
-    
-      ['year', 'Users Count'],
-      <?php 
-       foreach ($month_wise as $row){
-       echo "['".$row->year."',".$row->count."],";
-       }
-       ?>
-  ]);
-  var options = {
-      title: 'จำนวนผู้ใช้ในเเต่ละปี',
-      is3D: true,
-  };
-  /* Instantiate and draw the chart.*/
-  var chart = new google.visualization.PieChart(document.getElementById('month_pie'));
-  chart.draw(data, options);
-}
-</script>
-                </div>
+ 
               </div>
             </div>
             <div class="card-body">
-              <h6 class="mb-0 ">แสดงผู้ใช้งาน</h6>
-              <p class="text-sm ">จำนวนงานในเต่ละปี</p>
-              <hr class="dark horizontal">
-              <!-- <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
-          <div class="card z-index-2  ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                <div class="chart" id="year_work">
-                <script>
-
-// Draw the pie chart for registered users year wise
-google.charts.setOnLoadCallback(monthWiseChart);
-
-// for year wise
-function monthWiseChart() {
-
-  /* Define the chart to be drawn.*/
-  var data = google.visualization.arrayToDataTable([
-    
-      ['year', 'Users Count'],
-      <?php 
-       foreach ($year_work as $row){
-       echo "['".$row->year."',".$row->count."],";
-       }
-       ?>
-  ]);
-  var options = {
-      title: 'จำนวนงานในเเต่ละปี',
-      is3D: true,
-  };
-  /* Instantiate and draw the chart.*/
-  var chart = new google.visualization.PieChart(document.getElementById('year_work'));
-  chart.draw(data, options);
-}
-</script>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 "> แสดงงานทั้งหมด</h6>
-              <p class="text-sm ">จำนวนงานในเเต่ละปี</p>
-              <hr class="dark horizontal">
-              <!-- <div class="d-flex ">
-                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> updated 4 min ago </p>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 mt-4 mb-3">
-          <div class="card z-index-2 ">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                <div class="chart" id="comyear_work">
-
-                <script>
-
-// Draw the pie chart for registered users year wise
-google.charts.setOnLoadCallback(monthWiseChart);
-
-// for year wise
-function monthWiseChart() {
-
-  /* Define the chart to be drawn.*/
-  var data = google.visualization.arrayToDataTable([
-    
-      ['year', 'Users Count'],
-      <?php 
-       foreach ($comyear_work as $row){
-       echo "['".$row->year."',".$row->count."],";
-       }
-       ?>
-  ]);
-  var options = {
-      title: 'จำนวนงานที่เสร็จในเเต่ละปี',
-      is3D: true,
-  };
-  /* Instantiate and draw the chart.*/
-  var chart = new google.visualization.PieChart(document.getElementById('comyear_work'));
-  chart.draw(data, options);
-}
-</script>              </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <h6 class="mb-0 ">จำนวนงานที่เสร็จ</h6>
-              <p class="text-sm ">จำนวนงานที่เสร็จในเเต่ละปี</p>
+            
               <hr class="dark horizontal">
               <!-- <div class="d-flex ">
                 <i class="material-icons text-sm my-auto me-1">schedule</i>
