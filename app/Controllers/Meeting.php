@@ -160,7 +160,6 @@ class Meeting extends Controller
      
 
         $Meetingdata['user'] = $EventModel->orderBy('user_id', 'DESC')
-        
             ->join('room', 'room.room_id = events.room_id')
             ->findAll();
         return view('Meeting/information_meeting_list', $Meetingdata);
@@ -178,4 +177,17 @@ class Meeting extends Controller
         return view('Meeting/information_meeting_list', $data);
     }
 
+    public function today_meeting_information()
+    {
+        echo view('component/header');
+        $EventModel = new EventModel();
+     
+
+        $Meetingdata['user'] = $EventModel->where('date(start_date) = date(CURDATE())' )
+            ->join('room', 'room.room_id = events.room_id')
+            ->findAll();
+        return view('Meeting/information_meeting_list', $Meetingdata);
+    }
+
+    
 }

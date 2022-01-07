@@ -206,6 +206,9 @@
 <script>
   $(document).ready(function() {
     $('#users-list').DataTable({
+      "language": {
+      "emptyTable": "ไม่พบข้อมูลประชุม"
+    },
       "order": [
         [0, "DESC"]
       ],

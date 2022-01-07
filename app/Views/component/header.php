@@ -139,7 +139,7 @@
     </nav>
 
     <!-- ////////////////////////////////////////////////////////////////////////////-->
-
+    <!-- <?php if(basename($_SERVER['PHP_SELF']) === "index.php"){echo 'active';}?> -->
 
     <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="<?php echo base_url(); ?>/theme-assets/images/backgrounds/02.jpg">
       <div class="navbar-header">
@@ -151,15 +151,15 @@
       </div>
       <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php"><i class="ft-home"></i><span class="menu-title" data-i18n="">หน้าเเรก</span></a>
+          <li class="nav-item"><a href="<?php echo base_url(); ?>/index.php"><i class="ft-home"></i><span class="menu-title" data-i18n="">หน้าเเรก</span></a>
           </li>
           <?php $session = session(); ?>
 
 
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/insert/<?php echo $session->get('user_id');?>"><i class="ft-clock"></i><span class="menu-title" data-i18n="">จองห้องประชุม</span></a>
+          <li class="nav-item"><a href="<?php echo base_url(); ?>/index.php/insert/<?php echo $session->get('user_id');?>"><i class="ft-clock"></i><span class="menu-title" data-i18n="">จองห้องประชุม</span></a>
           </li>
      
-          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/meeting/meeting_information"><i class="ft-info"></i><span class="menu-title" data-i18n="">ข้อมูลการจอง</span></a>
+          <li class="nav-item"><a href="<?php echo base_url(); ?>/index.php/meeting/meeting_information"><i class="ft-info"></i><span class="menu-title" data-i18n="">ข้อมูลการจอง</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="cards.html"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
           </li>
@@ -174,6 +174,7 @@
           <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/report/meeting_report"><i class="ft-bar-chart"></i><span class="menu-title" data-i18n="">รายงานการจอง</span></a>
 
           <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/room/information_room"><i class="ft-book"></i><span class="menu-title" data-i18n="">ห้องประชุม</span></a>
+          <li class=" nav-item"><a href="<?php echo base_url(); ?>/index.php/Meeting/todaymeeting"><i class="ft-star"></i><span class="menu-title" data-i18n="">ประชุมวันนี้</span></a>
 
           <?php $session = session(); ?>
 

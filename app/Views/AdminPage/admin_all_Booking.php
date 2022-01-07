@@ -107,7 +107,7 @@
                                 </td>
 
                                 <td>
-                                <center> <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/AcceptStatus/<?= $booking['meeting_id']; ?>" class="btn btn-info btn-min-width mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="รายละเอียดข้อมูลการจอง" data-container="body" data-animation="true"> <i class="large material-icons">info</i></a> </center>
+                                <center> <a type="button" href="<?php echo base_url(); ?>/index.php/Admin/Admin_meeting_detail_edit/<?= $booking['meeting_id']; ?>" class="btn btn-info btn-min-width mr-1 mb-1" data-toggle="tooltip" data-placement="top" title="รายละเอียดข้อมูลการจอง" data-container="body" data-animation="true"> <i class="large material-icons">info</i></a> </center>
                                 </td>
                                 <td>
                                 <?php if ($booking['meeting_status'] == 2) { ?>
