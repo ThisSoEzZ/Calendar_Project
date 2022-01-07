@@ -157,6 +157,7 @@ class Admin extends Controller
         $UserModel->update($id, $data);
         return redirect()->to('/index.php/dashboard')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
     }
+
     public function updatePasswordUser() {
         $UserModel = new UserModel();
         $id = $this->request->getVar('user_id');
@@ -166,6 +167,7 @@ class Admin extends Controller
         $UserModel->update($id, $data);
         return redirect()->to('/index.php/admin/getAlluser')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
     }
+
     public function editpassword($Userid = null)
     {
         echo view('component/headerAdmin');
@@ -173,6 +175,7 @@ class Admin extends Controller
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/admin_chancepasswordUser', $Userdata);
     }
+
     public function editpasswordAdmin($Userid = null)
     {
         echo view('component/headerAdmin');
@@ -180,21 +183,13 @@ class Admin extends Controller
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/admin_chanceAdminpassword', $Userdata);
     }
+
     public function admin_Userprofile($Userid = null)
     {
         echo view('component/headerAdmin');
         $UserModel = new UserModel();
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/Admin_user_profile', $Userdata);
-    }
-
-    public function admin_repairDetail($id = null)
-    {
-        echo view('component/headerAdmin');
-        $RepairModel = new RepairModel();
-        
-        $data['repair'] = $RepairModel->where('case_id', $id)->first();
-        return view('AdminPage/admin_detail_repair', $data);
     }
 
     public function admin_Adminprofile($Userid = null)
@@ -204,6 +199,7 @@ class Admin extends Controller
         $Userdata['admin'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/admin_admin_profile', $Userdata);
     }
+
     public function editAdminpasswordAdmin($Userid = null)
     {
         echo view('component/headerAdmin');
@@ -211,6 +207,7 @@ class Admin extends Controller
         $Userdata['user'] = $UserModel->where('user_id', $Userid)->first();
         return view('AdminPage/admin_chanceAdminpasswordAdmin', $Userdata);
     }
+
     public function updateAdminPasswordAdmin() {
         $UserModel = new UserModel();
         $id = $this->request->getVar('user_id');
@@ -221,43 +218,6 @@ class Admin extends Controller
         return redirect()->to('/index.php/admin/admin_all_admin')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
     }
 
-    public function updateCaseRepair($id)
-    {
-        $RepairModel = new RepairModel();
-        $user_item = $RepairModel->find($id);
-        $old_img_name = $user_item['case_img'];
-
-        $file = $this->request->getFile('case_img');
-        if ($file->isValid() && !$file->hasMoved()) {
-            if (file_exists("uploads/Imagecase/" . $old_img_name)) {
-                unlink("uploads/Imagecase/" . $old_img_name);
-            }
-            $imageName = $file->getRandomName();
-            $file->move('uploads/Imagecase/', $imageName);
-        } else {
-            $imageName = $old_img_name;
-        }
-        
-        $data = [
-            'user_id' => $this->request->getVar('user_id'),
-            'case_type' => $this->request->getVar('case_type'),
-            'case_detail' => $this->request->getVar('case_detail'),
-            'case_loc' => $this->request->getVar('case_loc'),
-            'case_update' => date('Y-m-d H:i:s'),
-            'user_name' => $this->request->getVar('user_name'),
-            'user_email' => $this->request->getVar('user_email'),
-            'user_phone' => $this->request->getVar('user_phone'),
-            'case_status' => $this->request->getVar('case_status'),
-            'admin_email' => $this->request->getVar('admin_email'),
-            'admin_name' => $this->request->getVar('admin_name'),
-            'case_update_log' => $this->request->getVar('case_update_log'),
-
-            'case_img' => $imageName
-        ];
-
-        $RepairModel->update($id, $data);
-        return redirect()->to('/index.php/Admin/admin_all_repair')->with('profilesuccess', 'แก้ไขข้อมูลเสร็จสิ้น');
-    }
 
     public function AcceptStatus($id = null)
     {
@@ -289,5 +249,48 @@ class Admin extends Controller
     }
 
 
+    public function Admin_meeting_detail_edit($id = null)
+    {
+        echo view('component/headerAdmin');
+        $EventModel = new EventModel();
+        $data['room'] = $EventModel->where('meeting_id', $id)->join('room', 'room.room_id = events.room_id')->first();
+        return view('AdminPage/admin_edit_detail_ฺbooking', $data);
+    }
+
+    public function Admin_update_detail_meeting($id)
+    {
+        $EventModel = new EventModel();
+        $data = array(
+            'user_id' => $this->request->getVar('user_id'),
+            'meeting_title' => $this->request->getVar('meeting_title'),
+            'start_date' => $this->request->getVar('start_date'),
+            // 'start_date' => date('Y-m-d H:i:s'),
+            'end_date' => $this->request->getVar('end_date'),
+            'backgroundColor' => $this->request->getVar('backgroundColor'),
+            'meeting_detail' => $this->request->getVar('meeting_detail'),
+            'meeting_round' => $this->request->getVar('meeting_round'),
+            'room_id' => $this->request->getVar('room_id'),
+            'meeting_record' => $this->request->getVar('meeting_record'),
+            'meeting_location' => $this->request->getVar('meeting_location'),
+            'meeting_type1'      => implode(",", ($this->request->getVar('meeting_type1'))),
+            // 'meeting_type1' => $this->request->getVar('meeting_type1'),
+            // 'meeting_type2' => $this->request->getVar('meeting_type2'),
+            // 'meeting_type3' => $this->request->getVar('meeting_type3'),
+            'meeting_drink'      => implode(",", ($this->request->getVar('meeting_drink'))),
+            'meeting_amount' => $this->request->getVar('meeting_amount'),
+            'meeting_agency' => $this->request->getVar('meeting_agency'),
+            'meeting_grouppepole' => $this->request->getVar('meeting_grouppepole'),
+            'meeting_titlename' => $this->request->getVar('meeting_titlename'),
+            'meeting_name' => $this->request->getVar('meeting_name'),
+            'meeting_lastname' => $this->request->getVar('meeting_lastname'),
+            'meeting_phone' => $this->request->getVar('meeting_phone'),
+            'meeting_other_requirements'      => implode(",", ($this->request->getVar('meeting_other_requirements'))),
+            'meeting_status' => $this->request->getVar('meeting_status'),
+
+        );
+
+        $EventModel->update($id, $data);
+        return redirect()->to('/index.php/Admin/admin_all_Booking')->with('profilesuccess', 'เเก้ไขการจองห้องประชุมเสร็จสิ้น');
+    }
 
 }

@@ -69,6 +69,8 @@ $routes->get('/Admin/updateAdminPasswordAdmin/(:num)', 'Admin::updateAdminPasswo
 $routes->get('/Admin/updateCaseRepair/(:num)', 'Admin::updateCaseRepair/$1',['filter' => 'authGuard']);
 $routes->get('/Admin/AcceptStatus/(:num)', 'Admin::AcceptStatus/$1',['filter' => 'authGuard']);
 $routes->get('/Admin/CancelStatus/(:num)', 'Admin::CancelStatus/$1',['filter' => 'authGuard']);
+$routes->get('/Admin/Admin_update_detail_meeting/(:num)', 'Admin::Admin_update_detail_meeting/$1',['filter' => 'authGuard']);
+
 
 
 // $routes->post('updateProfile', 'User::updateProfile');
@@ -92,7 +94,8 @@ $routes->post('submit-form', 'Meeting::store',['filter' => 'authGuard']);
 $routes->get('/Meeting/report_meeting_detail/(:any)/(:num)', 'Report::report_meeting_detail/$1/$2',['filter' => 'authGuard']);
 $routes->get('/Meeting/delete/(:num)', 'Meeting::delete_meeting_user/$1',['filter' => 'authGuard']);
 $routes->get('/Meeting/bystatusMeeting/(:num)', 'Meeting::bystatusMeeting/$1');
-
+$routes->get('/Meeting/todaymeeting', 'Meeting::today_meeting_information');
+$routes->get('/Meeting/Admin_meeting_detail_edit/(:num)', 'Meeting::Admin_meeting_detail_edit/$1');
 
 $routes->get('/Admin/bystatusAdmin/(:num)', 'Admin::bystatusAdmin/$1');
 

@@ -23,10 +23,15 @@ class Report extends Controller
         $EventModel = new EventModel();
         $data['room'] = $RoomModel->orderBY('room_id')->findAll();
         $this->db->query("SET lc_time_names = 'th_TH'");
-        $Alltotal = $this->db->query("SELECT DISTINCT COUNT(*) TotalCount, a.room_id, b.room_name , a.meeting_id,YEAR(start_date) as year,SUM(meeting_amount) as total FROM events a INNER JOIN room b ON a.room_id = b.room_id WHERE start_date >= DATE_SUB(CURDATE(), INTERVAL 0 YEAR) GROUP BY room_id")->getResult();
+        $Alltotal = $this->db->query("    SELECT DISTINCT COUNT(*) TotalCount, a.room_id, b.room_name , a.meeting_id,YEAR(start_date) as year,SUM(meeting_amount) as total FROM events a INNER JOIN room b ON a.room_id = b.room_id WHERE YEAR(start_date) = YEAR(CURDATE()) GROUP BY room_id")->getResult();
         $data['Alltotal'] = $Alltotal;
         return view('Meeting/report_meeting_list', $data);
     }
+
+
+
+    // $Alltotal = $this->db->query("SELECT DISTINCT COUNT(*) TotalCount, a.room_id, b.room_name , a.meeting_id,YEAR(start_date) as year,SUM(meeting_amount) as total FROM events a INNER JOIN room b ON a.room_id = b.room_id WHERE start_date >= DATE_SUB(CURDATE(), INTERVAL 0 YEAR) GROUP BY room_id")->getResult();
+
     // $Alltotal = $this->db->query("SELECT DISTINCT COUNT(*) TotalCount, a.room_id, b.room_name , a.meeting_id,YEAR(start_date) as year,SUM(meeting_amount) as total FROM events a INNER JOIN room b ON a.room_id = b.room_id GROUP BY room_id;")->getResult();
 
   public function Test($Roomid = 0, $Year = 0)
